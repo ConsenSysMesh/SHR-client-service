@@ -11,4 +11,4 @@ before_install:
   - docker build -t client-service -f Dockerfile .
 
 scripts:
-#  - docker run client-service npm run test -- --coverage
+  - docker run client-service npm run test -- --coverage
