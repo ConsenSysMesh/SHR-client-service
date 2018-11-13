@@ -1,13 +1,15 @@
-'use strict';
+const Knex = require('knex')
+const connection = require('../knexfile')
+const { Model } = require('objection')
 
-class Client {
-    constructor(id, name, clientId, primEmail, secEmail) {
-        this.id = id;
-        this.name = name;
-        this.clientId = clientId;
-        this.primEmail = primEmail;
-        this.secEmail = secEmail;
+const knexConnection = Knex(connection)
+
+Model.knex(knexConnection)
+
+class Client extends Model {
+    static get tableName () {
+      return 'client'
     }
 }
 
-module.exports = Client;
+module.exports = Client

@@ -1,34 +1,50 @@
 'use strict';
 
-const Router = require('express');
-const clientRepo = require('../repo/clientRepository');
+const express = require('express')
 
-const getClientRoutes = (app) => {
-    const router = new Router();
+const Client = require('../model/client')
 
-    router
-        .get('/get/:id', (req, res) => {
-            const id = parseInt(req.params.id);
-            const result = clientRepo.getById(id);
-            res.send(result);
-        })
-        .get('/all', (req, res) => {
-            const result = clientRepo.getAll();
-            res.send(result);
-        })
-        .get('/remove', (req, res) => {
-            clientRepo.remove();
-            const result = 'Last person remove. Total count: '
-                + clientRepo.persons.size;
-            res.send(result);
-        })
-        .post('/save', (req, res) => {
-            const client = req.body;
-            const result = clientRepo.save(client);
-            res.send(result);
-        });
+const router = express.Router()
 
-    app.use('/client', router);
-};
+router.get('/', async (req, res) => {
+  const clients = await Client.query()
+  res.json(clients)
+})
 
-module.exports = getClientRoutes;
+router.get('/:id', async (req, res) => {
+  const client = await Client.query().findById(req.params.id)
+  res.json(client)
+})
+
+router.post('/', async (req, res) => {
+  const newClient = req.body
+
+  if (newClient.id > 0) {
+
+    const client = await Client
+                            .query()
+                            .patch({name: newClient.name, primEmail: newClient.primEmail, secEmail: newClient.secEmail, clientId: newClient.clientId})
+                            .where('id', newClient.id)
+                            .returning('*')
+                            .first();
+
+    res.send(client)
+  } else {
+
+      
+    const client = await Client
+                          .query()
+                          .allowInsert('[name, clientId]')
+                          .insertGraph(newClient);
+    res.send(client)
+  }
+
+})
+
+router.delete('/:id', async (req, res) => {
+  await Client.query().deleteById(req.params.id)
+
+  res.redirect('/client')
+})
+
+module.exports = router

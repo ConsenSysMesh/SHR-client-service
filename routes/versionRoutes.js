@@ -1,9 +1,11 @@
 'use strict';
+const express = require('express')
+const config = require('../config/config');
+const router = express.Router()
 
-const getVersionRoutes = (app, config) => {
-    app.get('/api/version', (req, res) => {
-        res.send(config.version);
-    });
-};
+router.get('/', async (req, res) => {
+  res.send(config.version)
+})
 
-module.exports = getVersionRoutes;
+
+module.exports = router;

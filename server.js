@@ -1,17 +1,20 @@
-'use strict';
+const express = require('express')
+const cors = require('cors')
+const parser = require('body-parser')
+const version = require('./routes/versionRoutes')
+const client = require('./routes/clientRoutes')
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const config = require('./config/config');
-const app = new express();
+require('dotenv').config()
 
-// register JSON parser middlewear
-app.use(bodyParser.json());
+const app = express()
 
-require('./routes/clientRoutes')(app);
-require('./routes/versionRoutes')(app, config);
+app.use(parser.urlencoded({extended: true}))
+app.use(parser.json())
 
-app.listen(3000, () => {
-    /* eslint-disable */
-    console.log("Server is up!");
-});
+app.use(cors())
+app.use('/client', client)
+app.use('/version', version)
+
+app.listen('8080', () => {
+  console.log('Server is up!')
+})
