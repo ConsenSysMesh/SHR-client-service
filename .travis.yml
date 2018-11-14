@@ -29,7 +29,7 @@ before_install:
 
 before_script:
   - docker-compose up --build -d
-  - docker-compose run api knex migrate:latest --env development --knexfile ./knexfile.js
+  - docker-compose exec api ./node_modules/.bin/knex migrate:latest --env development --knexfile ./knexfile.js
   
 script:
   - docker-compose run api npm test -- --coverage
