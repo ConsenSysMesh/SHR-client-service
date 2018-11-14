@@ -3,6 +3,18 @@ language: node_js
 node_js:
 - '8'
 
+notifications:
+  email: false    # default notification method
+  slack:
+    rooms:
+      - secure: travelblocks:nbxAWnqteN1m3pj47UAUNfZS
+    on_success: always  # change: send a notification when the build status changes.
+    on_failure: always  # always: always send a notification.
+    template:
+      - "Repo `%{repository_slug}` *%{result}* build (<%{build_url}|#%{build_number}>) for commit (<%{compare_url}|%{commit}>) on branch `%{branch}`."
+      - "Execution time: *%{duration}*"
+      - "Message: %{message}"
+
 sudo: required
 services:
   - docker
