@@ -15,6 +15,6 @@ app.use(cors())
 app.use('/client', client)
 app.use('/version', version)
 
-app.listen('8080', () => {
+app.listen('3000', () => {
   console.log('Server is up!')
 })

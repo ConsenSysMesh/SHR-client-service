@@ -15,12 +15,24 @@ notifications:
       - "Execution time: *%{duration}*"
       - "Message: %{message}"
 
-sudo: required
 services:
   - docker
 
-before_install:
-  - docker build -t client-service -f Dockerfile .
+env:
+  DOCKER_COMPOSE_VERSION: 1.22.0
 
-scripts:
-  - docker run client-service npm run test -- --coverage
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+before_script:
+  - docker-compose up --build -d
+  - docker-compose run capi knex migrate:latest --env development --knexfile ./knexfile.js
+  
+script:
+  - docker-compose run api npm test -- --coverage
+  
+after_script:
+  - docker-compose down

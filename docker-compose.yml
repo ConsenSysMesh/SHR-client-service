@@ -23,7 +23,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 8080:8080
+      - 3000:3000
     environment:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
       - NODE_ENV=$NODE_ENV
