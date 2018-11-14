@@ -2,8 +2,8 @@ version: '3.6'
 
 services:
 
-  # PostgreSQL
-  db:
+  # PostgreSQL, service need to be named postgres in order for Travis to work
+  postgres:
     image: postgres:10.1-alpine
     hostname: db
     volumes:
@@ -28,4 +28,4 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
       - NODE_ENV=$NODE_ENV
     depends_on:
-      - db
+      - postgres
