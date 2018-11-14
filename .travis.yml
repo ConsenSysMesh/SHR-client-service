@@ -28,6 +28,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
+  - docker-compose down
   - docker-compose up --build -d
   - docker-compose run capi knex migrate:latest --env development --knexfile ./knexfile.js
   
