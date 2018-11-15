@@ -2,8 +2,8 @@ version: '3.6'
 
 services:
 
-  # PostgreSQL, service need to be named postgres in order for Travis to work
-  postgres:
+  # PostgreSQLis 
+  db:
     image: postgres:10.1-alpine
     hostname: db
     volumes:
@@ -11,8 +11,7 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=clientsrv
-    ports:
+      - POSTGRES_DB=postgres
       - 5432:5432
   
 
@@ -25,7 +24,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DATABASE_URL=postgres://admin:admin@postgres:5432/clientsrv
+      - DATABASE_URL=postgres://admin:admin@db:5432/postgres
       - NODE_ENV=$NODE_ENV
     depends_on:
-      - postgres
+      - db
