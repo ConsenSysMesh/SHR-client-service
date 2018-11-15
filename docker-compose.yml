@@ -9,11 +9,11 @@ services:
     volumes:
       - /var/lib/postgresql/data/
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=clientsrv
     ports:
-      - "5433:5433"
+      - 5432:5432
   
 
 
@@ -25,7 +25,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@db:5433/postgres
+      - DATABASE_URL=postgres://admin:admin@postgres:5432/clientsrv
       - NODE_ENV=$NODE_ENV
     depends_on:
       - postgres

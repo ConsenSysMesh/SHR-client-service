@@ -22,13 +22,21 @@ env:
   DOCKER_COMPOSE_VERSION: 1.22.0
 
 before_install:
+  # Let's stop postgresql as Travis starts its own
+  - sudo service postgresql stop
+  # wait for postgresql to shutdown
+  - while sudo lsof -Pi :5432 -sTCP:LISTEN -t; do sleep 1; done
+
+  # Install docker compose
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 
 before_script:
+  # Strat postgres and api in their own containers
   - docker-compose up --build -d
+  # Create the table
   - docker-compose exec api ./node_modules/.bin/knex migrate:latest --env development --knexfile ./knexfile.js
   
 script:
