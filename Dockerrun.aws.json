@@ -1,0 +1,28 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [{
+        "name": "api-client-service",
+        "image": "633743334973.dkr.ecr.eu-west-2.amazonaws.com/client-service:api",
+        "environment": [],
+        "essential": true,
+        "memory": 256,
+        "portMappings": [{
+            "hostPort": 80,
+            "containerPort": 8080
+        }],
+        "links": [
+            "db-lient-service"
+        ],
+        "mountPoints": []
+    }, {
+        "name": "db-lient-service",
+        "image": "633743334973.dkr.ecr.eu-west-2.amazonaws.com/client-service:db",
+        "essential": true,
+        "memory": 256,
+        "portMappings": [{
+            "hostPort": 5432,
+            "containerPort": 5432
+        }],
+        "mountPoints": []
+    }]
+}
