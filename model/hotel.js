@@ -6,10 +6,10 @@ const knexConnection = Knex(connection)
 
 Model.knex(knexConnection)
 
-class Client extends Model {
+class Hotel extends Model {
     static get tableName () {
-      return 'client'
+      return 'hotel'
     }
 }
 
-module.exports = Client
+module.exports = Hotel
