@@ -36,7 +36,7 @@ router.post('/', async (req, res) => {
                           .query()
                           .allowInsert('[name, clientId]')
                           .insertGraph(newClient);
-    res.send(hclient)
+    res.send(client)
   }
 
 })
