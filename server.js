@@ -2,7 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const parser = require('body-parser')
 const version = require('./routes/versionRoutes')
-const client = require('./routes/hotelRoutes')
+const client = require('./routes/clientRoutes')
 
 require('dotenv').config()
 
@@ -12,9 +12,9 @@ app.use(parser.urlencoded({extended: true}))
 app.use(parser.json())
 
 app.use(cors())
-app.use('/hotel', client)
+app.use('/client', client)
 app.use('/version', version)
 
-app.listen('3001', () => {
+app.listen('3000', () => {
   console.log('Server is up!')
 })

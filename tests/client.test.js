@@ -10,10 +10,10 @@ chai.use(chaiHttp);
 /*
   * Test the /GET route
   */
- describe('/GET hotel', () => {
-  it('it should GET all the hotels', (done) => {
+ describe('/GET client', () => {
+  it('it should GET all the clients', (done) => {
     chai.request(server)
-        .get('/hotel')
+        .get('/client')
         .end((err, res) => {
               res.should.have.status(200);
               res.body.should.be.a('array');

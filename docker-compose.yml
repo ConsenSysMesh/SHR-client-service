@@ -22,7 +22,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 3001:3001
+      - 3000:3000
     environment:
       - DATABASE_URL=postgres://admin:admin@db:5432/postgres
       - NODE_ENV=$NODE_ENV
